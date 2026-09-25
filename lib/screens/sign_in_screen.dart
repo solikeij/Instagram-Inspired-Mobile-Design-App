@@ -43,7 +43,9 @@ class _SignInScreenState extends State<SignInScreen> {
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('Password help'),
-      content: const Text('Walang kanin busseng!'),
+      content: const Text(
+        'This is a demo app. Password recovery is not connected to an account service.',
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),

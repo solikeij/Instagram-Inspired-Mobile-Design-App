@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
-    "name": "home_screen",
-    "short_name": "home_screen",
-=======
     "name": "instagram_dark_lab",
     "short_name": "instagram_dark_lab",
->>>>>>> 114b604102c028d9ed107c22ad8bf5ef0124dddd
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

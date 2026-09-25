@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:instagram_dark_lab/app.dart';
+import 'package:instagram_inspired_mobile_design_app/app.dart';
 
 void main() {
   testWidgets('render mobile sign in and sign up', (tester) async {

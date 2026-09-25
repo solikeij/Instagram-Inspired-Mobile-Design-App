@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import '../app.dart';
 import '../models/home_arguments.dart';
 import '../widgets/auth_widgets.dart';
@@ -14,7 +13,9 @@ class HomeScreen extends StatelessWidget {
     // Raw name passed via route arguments
     final String rawName = args?.name.isNotEmpty == true
         ? args!.name
-        : (args?.email.isNotEmpty == true ? args!.email.split('@').first : 'James');
+        : (args?.email.isNotEmpty == true
+              ? args!.email.split('@').first
+              : 'James');
 
     // Instagram handle version (lowercase, snake_case)
     final String username = rawName.toLowerCase().trim().replaceAll(' ', '_');
@@ -26,7 +27,11 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.camera_alt_outlined, color: Colors.white, size: 26),
+          icon: const Icon(
+            Icons.camera_alt_outlined,
+            color: Colors.white,
+            size: 26,
+          ),
           onPressed: () {},
         ),
         title: const Text(
@@ -41,11 +46,19 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.live_tv_outlined, color: Colors.white, size: 24),
+            icon: const Icon(
+              Icons.live_tv_outlined,
+              color: Colors.white,
+              size: 24,
+            ),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.send_outlined, color: Colors.white, size: 24),
+            icon: const Icon(
+              Icons.send_outlined,
+              color: Colors.white,
+              size: 24,
+            ),
             onPressed: () {},
           ),
         ],
@@ -60,7 +73,10 @@ class HomeScreen extends StatelessWidget {
                 height: 100,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
                   children: [
                     _buildStoryItem(
                       username,
@@ -95,7 +111,10 @@ class HomeScreen extends StatelessWidget {
               // Welcome Banner (Requirement)
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 margin: const EdgeInsets.fromLTRB(16, 12, 16, 4),
                 decoration: BoxDecoration(
                   color: const Color(0xFF1E1E1E),
@@ -104,7 +123,11 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.waving_hand, color: Colors.amber, size: 20),
+                    const Icon(
+                      Icons.waving_hand,
+                      color: Colors.amber,
+                      size: 20,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -122,7 +145,10 @@ class HomeScreen extends StatelessWidget {
 
               // Post Header
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Row(
                   children: [
                     const CircleAvatar(
@@ -168,34 +194,53 @@ class HomeScreen extends StatelessWidget {
 
               // Post Actions Bar
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 child: Row(
                   children: [
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.favorite_border, color: Colors.white, size: 26),
+                      icon: const Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                        size: 26,
+                      ),
                       onPressed: () {},
                     ),
                     const SizedBox(width: 16),
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.chat_bubble_outline, color: Colors.white, size: 24),
+                      icon: const Icon(
+                        Icons.chat_bubble_outline,
+                        color: Colors.white,
+                        size: 24,
+                      ),
                       onPressed: () {},
                     ),
                     const SizedBox(width: 16),
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.send_outlined, color: Colors.white, size: 24),
+                      icon: const Icon(
+                        Icons.send_outlined,
+                        color: Colors.white,
+                        size: 24,
+                      ),
                       onPressed: () {},
                     ),
                     const Spacer(),
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.bookmark_border, color: Colors.white, size: 26),
+                      icon: const Icon(
+                        Icons.bookmark_border,
+                        color: Colors.white,
+                        size: 26,
+                      ),
                       onPressed: () {},
                     ),
                   ],
@@ -224,7 +269,10 @@ class HomeScreen extends StatelessWidget {
 
               // Add Comment Section
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Row(
                   children: const [
                     CircleAvatar(
@@ -290,7 +338,10 @@ class HomeScreen extends StatelessWidget {
                         },
                         child: const Text(
                           'Log out',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -315,11 +366,23 @@ class HomeScreen extends StatelessWidget {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home, size: 28), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.search, size: 28), label: ''),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home, size: 28),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search, size: 28),
+                label: '',
+              ),
               BottomNavigationBarItem(icon: SizedBox(width: 28), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite_border, size: 28), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.person_outline, size: 28), label: ''),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_border, size: 28),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline, size: 28),
+                label: '',
+              ),
             ],
           ),
           Positioned(
@@ -423,58 +486,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-=======
-
-import '../app.dart';
-import '../models/home_arguments.dart';
-
-/// Integration placeholder only. Your groupmate owns the Home screen UI.
-/// Keep this class/route, and replace its body with their implementation.
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments;
-    final user = arguments is HomeArguments ? arguments : null;
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.check_circle_outline,
-                  size: 40,
-                  color: Color(0xFF70B5FF),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Home screen placeholder',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Name received: ${user?.name ?? "Guest"}',
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                TextButton(
-                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRoutes.login,
-                    (_) => false,
-                  ),
-                  child: const Text('Return to log in'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
->>>>>>> 114b604102c028d9ed107c22ad8bf5ef0124dddd

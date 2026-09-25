@@ -1,37 +1,7 @@
-<<<<<<< HEAD
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:home_screen/main.dart';
-
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-=======
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:instagram_dark_lab/app.dart';
-import 'package:instagram_dark_lab/validation/validators.dart';
+import 'package:instagram_inspired_mobile_design_app/app.dart';
+import 'package:instagram_inspired_mobile_design_app/validation/validators.dart';
 
 void main() {
   test('validates names, email, identifiers and passwords', () {
@@ -98,34 +68,33 @@ void main() {
         isFalse,
       );
       await tapText(tester, 'Log in');
-      expect(find.text('Name received: maria'), findsOneWidget);
-      await tapText(tester, 'Return to log in');
+      expect(find.text('Welcome back, maria!'), findsOneWidget);
+      await tapText(tester, 'Log out');
       expect(find.text('Create new account'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
-  testWidgets(
-    'signup checks confirmation and sends name to reserved Home route',
-    (tester) async {
-      await start(tester);
-      await tapText(tester, 'Create new account');
-      await tester.enterText(find.byType(TextFormField).at(0), 'María Santos');
-      await tester.enterText(
-        find.byType(TextFormField).at(1),
-        'maria@example.com',
-      );
-      await tester.enterText(find.byType(TextFormField).at(2), 'Sample123!');
-      await tester.enterText(find.byType(TextFormField).at(3), 'Wrong123!');
-      await tapText(tester, 'Sign up');
-      expect(find.text('Passwords do not match.'), findsOneWidget);
-      await tester.enterText(find.byType(TextFormField).at(3), 'Sample123!');
-      await tapText(tester, 'Sign up');
-      expect(find.text('Name received: María Santos'), findsOneWidget);
-      final context = tester.element(find.text('Home screen placeholder'));
-      expect(Navigator.canPop(context), isFalse);
-      expect(tester.takeException(), isNull);
-    },
-  );
+  testWidgets('signup checks confirmation and sends name to Home', (
+    tester,
+  ) async {
+    await start(tester);
+    await tapText(tester, 'Create new account');
+    await tester.enterText(find.byType(TextFormField).at(0), 'María Santos');
+    await tester.enterText(
+      find.byType(TextFormField).at(1),
+      'maria@example.com',
+    );
+    await tester.enterText(find.byType(TextFormField).at(2), 'Sample123!');
+    await tester.enterText(find.byType(TextFormField).at(3), 'Wrong123!');
+    await tapText(tester, 'Sign up');
+    expect(find.text('Passwords do not match.'), findsOneWidget);
+    await tester.enterText(find.byType(TextFormField).at(3), 'Sample123!');
+    await tapText(tester, 'Sign up');
+    expect(find.text('Welcome back, María Santos!'), findsOneWidget);
+    final context = tester.element(find.text('Welcome back, María Santos!'));
+    expect(Navigator.canPop(context), isFalse);
+    expect(tester.takeException(), isNull);
+  });
   testWidgets('small screen and keyboard leave both forms scrollable', (
     tester,
   ) async {
@@ -139,6 +108,5 @@ void main() {
     expect(tester.takeException(), isNull);
     await tapText(tester, 'Already have an account? Log in');
     expect(find.text('Create new account'), findsOneWidget);
->>>>>>> 114b604102c028d9ed107c22ad8bf5ef0124dddd
   });
 }
