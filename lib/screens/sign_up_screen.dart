@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../app.dart';
 import '../models/home_arguments.dart';
 import '../validation/validators.dart';
@@ -7,137 +6,157 @@ import '../widgets/auth_widgets.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _form = GlobalKey<FormState>();
-  final _name = TextEditingController();
-  final _email = TextEditingController();
-  final _password = TextEditingController();
-  final _confirm = TextEditingController();
-  bool _submitted = false;
-  @override
-  void dispose() {
-    _name.dispose();
-    _email.dispose();
-    _password.dispose();
-    _confirm.dispose();
-    super.dispose();
-  }
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
-  void _signup() {
-    setState(() => _submitted = true);
-    if (!_form.currentState!.validate()) return;
-    FocusScope.of(context).unfocus();
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRoutes.home,
-      (_) => false,
-      arguments: HomeArguments(
-        name: _name.text.trim(),
-        email: _email.text.trim(),
-      ),
-    );
-  }
-
-  void _back() {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    } else {
-      Navigator.pushReplacementNamed(context, AppRoutes.login);
+  void _handleSignUp() {
+    if (_formKey.currentState?.validate() ?? false) {
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.home,
+        arguments: HomeArguments(
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+        ),
+      );
     }
   }
 
   @override
-  Widget build(BuildContext context) => AuthLayout(
-    builder: (height) => Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: IconButton(
-            tooltip: 'Back to log in',
-            onPressed: _back,
-            icon: const Icon(Icons.arrow_back),
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AuthLayout(
+      builder: (height) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
-        ),
-        const Center(child: BrandIcon(size: 72)),
-        const SizedBox(height: 12),
-        const Text(
-          'Create your account',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -.7,
+          const BrandIcon(size: 60),
+          const Center(
+            child: Text(
+              'Create your account',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          'A little more you. A little more connected.',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFFB3B6BA), fontSize: 14),
-        ),
-        const SizedBox(height: 30),
-        Form(
-          key: _form,
-          autovalidateMode: _submitted
-              ? AutovalidateMode.onUserInteraction
-              : AutovalidateMode.disabled,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _name,
-                validator: Validators.fullName,
-                textCapitalization: TextCapitalization.words,
-                autofillHints: const [AutofillHints.name],
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(labelText: 'Full name'),
-              ),
-              const SizedBox(height: 14),
-              TextFormField(
-                controller: _email,
-                validator: Validators.email,
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                enableSuggestions: false,
-                autofillHints: const [AutofillHints.email],
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(labelText: 'Email address'),
-              ),
-              const SizedBox(height: 14),
-              PasswordField(
-                controller: _password,
-                label: 'Password',
-                isNew: true,
-                validator: Validators.password,
-                onChanged: (_) {
-                  if (_submitted) _form.currentState!.validate();
-                },
-              ),
-              const SizedBox(height: 14),
-              PasswordField(
-                controller: _confirm,
-                label: 'Confirm password',
-                isNew: true,
-                validator: (value) =>
-                    Validators.confirmation(value, _password.text),
-                onSubmitted: _signup,
-              ),
-              const SizedBox(height: 24),
-              FilledButton(onPressed: _signup, child: const Text('Sign up')),
-            ],
+          const SizedBox(height: 6),
+          const Center(
+            child: Text(
+              'A little more you. A little more connected.',
+              style: TextStyle(color: Color(0xFF8E8E93), fontSize: 13),
+            ),
           ),
-        ),
-        const SizedBox(height: 22),
-        OutlinedButton(
-          onPressed: _back,
-          child: const Text('Already have an account? Log in'),
-        ),
-        const DemoFooter(),
-      ],
-    ),
-  );
+          const SizedBox(height: 24),
+          Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  validator: Validators.name,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(labelText: 'Full name'),
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: _emailController,
+                  validator: Validators.email,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(labelText: 'Email address'),
+                ),
+                const SizedBox(height: 12),
+                PasswordField(
+                  controller: _passwordController,
+                  label: 'Password',
+                  validator: Validators.password,
+                  isNew: true,
+                ),
+                const SizedBox(height: 12),
+                PasswordField(
+                  controller: _confirmPasswordController,
+                  label: 'Confirm password',
+                  validator: (value) => Validators.confirmPassword(value, _passwordController.text),
+                  onSubmitted: _handleSignUp,
+                  isNew: true,
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  height: 44,
+                  child: Material(
+                    color: const Color(0xFF0064E0),
+                    borderRadius: BorderRadius.circular(22),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(22),
+                      onTap: _handleSignUp,
+                      child: const Center(
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            height: 44,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFF0064E0), width: 1.2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22),
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: RichText(
+                text: const TextSpan(
+                  style: TextStyle(fontSize: 13),
+                  children: [
+                    TextSpan(text: 'Already have an account? ', style: TextStyle(color: Color(0xFF0064E0))),
+                    TextSpan(text: 'Log in', style: TextStyle(color: Color(0xFF0064E0), fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const DemoFooter(),
+        ],
+      ),
+    );
+  }
 }

@@ -1,147 +1,164 @@
 import 'package:flutter/material.dart';
 
-<<<<<<< HEAD
-class BrandIcon extends StatelessWidget {
-  const BrandIcon({super.key, this.size = 100});
-  final double size;
+class AuthLayout extends StatelessWidget {
+  final Widget Function(double availableHeight) builder;
+
+  const AuthLayout({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.camera_alt,
-      size: size,
-      color: Colors.white,
+    return Scaffold(
+      backgroundColor: const Color(0xFF181818),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              child: builder(constraints.maxHeight),
+            );
+          },
+        ),
+      ),
     );
   }
-=======
-class AuthLayout extends StatelessWidget {
-  const AuthLayout({super.key, required this.builder});
-  final Widget Function(double height) builder;
+}
+
+class BrandIcon extends StatelessWidget {
+  final double size;
+
+  const BrandIcon({super.key, this.size = 60});
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: Center(
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(size * 0.28),
+            gradient: const LinearGradient(
+              colors: [
+                Color(0xFFFEE411),
+                Color(0xFFFED308),
+                Color(0xFFF9373F),
+                Color(0xFFC913B9),
+                Color(0xFF4251E1),
+              ],
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+            ),
+          ),
           child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 440),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: builder(constraints.maxHeight),
+            child: Container(
+              width: size * 0.62,
+              height: size * 0.62,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(size * 0.18),
+                border: Border.all(color: Colors.white, width: size * 0.06),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: size * 0.28,
+                    height: size * 0.28,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: size * 0.06),
+                    ),
+                  ),
+                  Positioned(
+                    top: size * 0.05,
+                    right: size * 0.05,
+                    child: Container(
+                      width: size * 0.06,
+                      height: size * 0.06,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
-
-class BrandIcon extends StatelessWidget {
-  const BrandIcon({super.key, this.size = 100});
-  final double size;
-  @override
-  Widget build(BuildContext context) => Image.asset(
-    'assets/images/instagram_icon.png',
-    width: size,
-    height: size,
-    semanticLabel: 'Instagram',
-    filterQuality: FilterQuality.high,
-  );
+    );
+  }
 }
 
 class PasswordField extends StatefulWidget {
+  final TextEditingController controller;
+  final String label;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final VoidCallback? onSubmitted;
+  final bool isNew;
+
   const PasswordField({
     super.key,
     required this.controller,
     required this.label,
-    required this.validator,
+    this.validator,
     this.onChanged,
     this.onSubmitted,
     this.isNew = false,
   });
-  final TextEditingController controller;
-  final String label;
-  final String? Function(String?) validator;
-  final ValueChanged<String>? onChanged;
-  final VoidCallback? onSubmitted;
-  final bool isNew;
+
   @override
   State<PasswordField> createState() => _PasswordFieldState();
 }
 
 class _PasswordFieldState extends State<PasswordField> {
-  bool _hidden = true;
+  bool _obscure = true;
+
   @override
-  Widget build(BuildContext context) => TextFormField(
-    controller: widget.controller,
-    validator: widget.validator,
-    onChanged: widget.onChanged,
-    obscureText: _hidden,
-    autocorrect: false,
-    enableSuggestions: false,
-    keyboardType: TextInputType.visiblePassword,
-    autofillHints: [
-      widget.isNew ? AutofillHints.newPassword : AutofillHints.password,
-    ],
-    textInputAction: widget.onSubmitted == null
-        ? TextInputAction.next
-        : TextInputAction.done,
-    onFieldSubmitted: (_) => widget.onSubmitted?.call(),
-    decoration: InputDecoration(
-      labelText: widget.label,
-      suffixIcon: IconButton(
-        tooltip: _hidden
-            ? 'Show ${widget.label.toLowerCase()}'
-            : 'Hide ${widget.label.toLowerCase()}',
-        onPressed: () => setState(() => _hidden = !_hidden),
-        icon: Icon(
-          _hidden ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-          size: 21,
-          color: const Color(0xFFB3B6BA),
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      obscureText: _obscure,
+      validator: widget.validator,
+      onChanged: widget.onChanged,
+      textInputAction: widget.onSubmitted != null ? TextInputAction.done : TextInputAction.next,
+      onFieldSubmitted: widget.onSubmitted != null ? (_) => widget.onSubmitted!() : null,
+      autofillHints: [
+        widget.isNew ? AutofillHints.newPassword : AutofillHints.password,
+      ],
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: widget.label,
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+            color: const Color(0xFF8E8E93),
+          ),
+          onPressed: () => setState(() => _obscure = !_obscure),
         ),
       ),
-    ),
-  );
->>>>>>> 114b604102c028d9ed107c22ad8bf5ef0124dddd
+    );
+  }
 }
 
 class DemoFooter extends StatelessWidget {
   const DemoFooter({super.key});
-<<<<<<< HEAD
 
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 18),
+      padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Center(
         child: Text(
           'ITP107 - De Matta & Malana',
-          textAlign: TextAlign.center,
           style: TextStyle(
-            color: Color(0xFF9DA1A6),
+            color: Color(0xFF8E8E93),
             fontSize: 12,
-            letterSpacing: .4,
           ),
         ),
       ),
     );
   }
 }
-=======
-  @override
-  Widget build(BuildContext context) => const Padding(
-    padding: EdgeInsets.symmetric(vertical: 18),
-    child: Text(
-      'ITP107 - De Matta & Malana',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Color(0xFF9DA1A6),
-        fontSize: 12,
-        letterSpacing: .4,
-      ),
-    ),
-  );
-}
->>>>>>> 114b604102c028d9ed107c22ad8bf5ef0124dddd
